@@ -19,6 +19,8 @@
 		5555A8FB2A82CDC400687357 /* TechnologyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5555A8FA2A82CDC400687357 /* TechnologyViewController.swift */; };
 		5555A8FE2A83EA9300687357 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5555A8FD2A83EA9300687357 /* SnapKit */; };
 		5555A9042A83EDBE00687357 /* GeneralCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5555A9032A83EDBE00687357 /* GeneralCollectionViewCell.swift */; };
+		5555A9062A8691B600687357 /* DetaileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5555A9052A8691B600687357 /* DetaileViewController.swift */; };
+		5555A9082A8695ED00687357 /* AddSubview + Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5555A9072A8695ED00687357 /* AddSubview + Ex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,8 @@
 		5555A8F82A82CD9900687357 /* BusinessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessViewController.swift; sourceTree = "<group>"; };
 		5555A8FA2A82CDC400687357 /* TechnologyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TechnologyViewController.swift; sourceTree = "<group>"; };
 		5555A9032A83EDBE00687357 /* GeneralCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralCollectionViewCell.swift; sourceTree = "<group>"; };
+		5555A9052A8691B600687357 /* DetaileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetaileViewController.swift; sourceTree = "<group>"; };
+		5555A9072A8695ED00687357 /* AddSubview + Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddSubview + Ex.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,7 @@
 		5555A8B52A81824900687357 = {
 			isa = PBXGroup;
 			children = (
+				5555A90A2A86971F00687357 /* DetaileView */,
 				5555A8C02A81824900687357 /* NewsApp */,
 				5555A8D72A81824B00687357 /* NewsAppTests */,
 				5555A8E12A81824B00687357 /* NewsAppUITests */,
@@ -110,6 +115,7 @@
 				5555A8FF2A83ED6500687357 /* General */,
 				5555A9002A83ED6D00687357 /* Business */,
 				5555A9012A83ED7700687357 /* Technology */,
+				5555A9092A86969300687357 /* Extension */,
 				5555A8CA2A81824B00687357 /* Assets.xcassets */,
 				5555A8CC2A81824B00687357 /* LaunchScreen.storyboard */,
 				5555A8CF2A81824B00687357 /* Info.plist */,
@@ -165,6 +171,22 @@
 				5555A9032A83EDBE00687357 /* GeneralCollectionViewCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		5555A9092A86969300687357 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				5555A9072A8695ED00687357 /* AddSubview + Ex.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		5555A90A2A86971F00687357 /* DetaileView */ = {
+			isa = PBXGroup;
+			children = (
+				5555A9052A8691B600687357 /* DetaileViewController.swift */,
+			);
+			path = DetaileView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -309,6 +331,8 @@
 				5555A8C62A81824900687357 /* GeneralViewController.swift in Sources */,
 				5555A8F92A82CD9900687357 /* BusinessViewController.swift in Sources */,
 				5555A8C22A81824900687357 /* AppDelegate.swift in Sources */,
+				5555A9082A8695ED00687357 /* AddSubview + Ex.swift in Sources */,
+				5555A9062A8691B600687357 /* DetaileViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
