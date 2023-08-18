@@ -24,18 +24,17 @@ final class DetaileViewController: UIViewController {
     private let imageView: UIImageView = {
        let image = UIImageView()
         
-        image.image = UIImage(named: "image") ?? UIImage.add
-        image.sizeToFit()
+        image.contentMode = .scaleToFill
         
         return image
     }()
     private let titleLabel: UILabel = {
        let label = UILabel()
         
-        label.text = "Example Text"
         label.textColor = .black
-        label.font = .boldSystemFont(ofSize: 30)
-        label.textAlignment = .center
+        label.font = .boldSystemFont(ofSize: 23)
+        label.textAlignment = .left
+        label.numberOfLines = 2
         
         return label
     }()
@@ -43,7 +42,6 @@ final class DetaileViewController: UIViewController {
        let label = UILabel()
         
         label.numberOfLines = 0
-        label.text = "Picture description is a written caption that describes the essential information in an image. Picture descriptions can define photos, graphics, gifs, and video — basically anything containing visual information."
         label.textColor = .systemGray
         label.font = .italicSystemFont(ofSize: 15)
         label.textAlignment = .left
@@ -61,9 +59,22 @@ final class DetaileViewController: UIViewController {
     }()
     
     //MARK: - Properties
-    
+    private let viewModel: DetaileViewModelProtocol
     
     //MARK: - LyfeCycle
+    
+    init(viewModel: DetaileViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -77,6 +88,17 @@ final class DetaileViewController: UIViewController {
         contentView.addSubviews(views: [imageView, titleLabel, descriptionLable, dateLabel])
         view.addSubview(scrollView)
         view.backgroundColor = .white
+        
+        titleLabel.text = viewModel.title
+        descriptionLable.text = viewModel.description
+        dateLabel.text = viewModel.date
+        
+        if let data = viewModel.imageData,
+           let image = UIImage(data: data) {
+            imageView.image = image
+        } else {
+            imageView.image = UIImage(named: "image")
+        }
         
         setUpConstraints()
     }
@@ -94,7 +116,7 @@ final class DetaileViewController: UIViewController {
         }
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview().inset(50)
+            make.leading.trailing.equalToSuperview().inset(10)
         }
         descriptionLable.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(10)

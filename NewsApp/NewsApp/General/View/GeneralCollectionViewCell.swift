@@ -16,8 +16,7 @@ final class GeneralCollectionViewCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let image = UIImageView()
         
-        image.image = UIImage(named: "image") ?? UIImage.add
-        image.sizeToFit()
+        image.contentMode = .scaleToFill
         
         return image
     }()
@@ -34,6 +33,7 @@ final class GeneralCollectionViewCell: UICollectionViewCell {
         
         label.textColor = .white
         label.text = "Title"
+        label.textAlignment = .left
         
         return label
     }()
@@ -48,6 +48,20 @@ final class GeneralCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    //MARK: - Methods
+    
+    func set(article: ArticleCellViewModel) {
+        titleLable.text = article.title
+        
+        if let data = article.imageData,
+           let image = UIImage(data: data) {
+            imageView.image = image
+        } else {
+            imageView.image = UIImage(named: "image")
+        }
+    }
+    
     //MARK: - Private Methods
     
     private func setUpUI() {
@@ -62,7 +76,7 @@ final class GeneralCollectionViewCell: UICollectionViewCell {
             make.leading.top.trailing.bottom.equalToSuperview()
         }
         blackView.snp.makeConstraints { make in
-            make.top.equalTo(140)
+            make.height.equalTo(50)
             make.leading.trailing.bottom.equalToSuperview()
         }
         titleLable.snp.makeConstraints { make in
