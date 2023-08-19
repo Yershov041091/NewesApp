@@ -2,7 +2,7 @@
 //  TabBarController.swift
 //  NewsApp
 //
-//  Created by Artem Yershov on 07.08.2023.
+//  Created by Artem Yershov on 19.08.2023.
 //
 
 import Foundation

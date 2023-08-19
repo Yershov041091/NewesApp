@@ -31,6 +31,7 @@
 		5555A9202A8D20E200687357 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5555A91F2A8D20E200687357 /* ApiManager.swift */; };
 		5555A9232A8D28A900687357 /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5555A9222A8D28A900687357 /* NetworkingError.swift */; };
 		5555A9252A8FC92900687357 /* DetaileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5555A9242A8FC92900687357 /* DetaileViewModel.swift */; };
+		5555A92F2A90A0D000687357 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5555A92E2A90A0D000687357 /* TabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		5555A91F2A8D20E200687357 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		5555A9222A8D28A900687357 /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
 		5555A9242A8FC92900687357 /* DetaileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetaileViewModel.swift; sourceTree = "<group>"; };
+		5555A92E2A90A0D000687357 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 			children = (
 				5555A8C12A81824900687357 /* AppDelegate.swift */,
 				5555A8F62A8185A500687357 /* TabBarController.swift */,
+				5555A92E2A90A0D000687357 /* TabBarController.swift */,
 				5555A8FF2A83ED6500687357 /* General */,
 				5555A9002A83ED6D00687357 /* Business */,
 				5555A9012A83ED7700687357 /* Technology */,
@@ -175,8 +178,8 @@
 		5555A9002A83ED6D00687357 /* Business */ = {
 			isa = PBXGroup;
 			children = (
-				5555A8F82A82CD9900687357 /* BusinessViewController.swift */,
-				5555A9122A88DFB000687357 /* DitailesCollectionViewCell.swift */,
+				5555A9292A8FD47C00687357 /* ViewModel */,
+				5555A9272A8FD42E00687357 /* View */,
 			);
 			path = Business;
 			sourceTree = "<group>";
@@ -263,6 +266,22 @@
 			isa = PBXGroup;
 			children = (
 				5555A9242A8FC92900687357 /* DetaileViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5555A9272A8FD42E00687357 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5555A8F82A82CD9900687357 /* BusinessViewController.swift */,
+				5555A9122A88DFB000687357 /* DitailesCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5555A9292A8FD47C00687357 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -415,6 +434,7 @@
 				5555A8C62A81824900687357 /* GeneralViewController.swift in Sources */,
 				5555A8F92A82CD9900687357 /* BusinessViewController.swift in Sources */,
 				5555A9252A8FC92900687357 /* DetaileViewModel.swift in Sources */,
+				5555A92F2A90A0D000687357 /* TabBarController.swift in Sources */,
 				5555A8C22A81824900687357 /* AppDelegate.swift in Sources */,
 				5555A9082A8695ED00687357 /* AddSubview + Ex.swift in Sources */,
 				5555A9062A8691B600687357 /* DetaileViewController.swift in Sources */,

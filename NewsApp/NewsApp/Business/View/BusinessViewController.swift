@@ -28,8 +28,10 @@ final class BusinessViewController: UIViewController {
     }()
     
     //MARK: - Properties
+    
 
     //MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -76,6 +78,7 @@ extension BusinessViewController: UICollectionViewDataSource {
 }
 extension BusinessViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
 //        navigationController?.pushViewController(DetaileViewController(), animated: true)
     }
 }

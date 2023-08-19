@@ -14,7 +14,6 @@ final class DitailesCollectionViewCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         
-        view.image = UIImage(named: "image") ?? UIImage.add
         view.contentMode = .scaleToFill
         view.layer.masksToBounds = true //картинка не будет выходить за границы
         
@@ -25,7 +24,6 @@ final class DitailesCollectionViewCell: UICollectionViewCell {
         
         label.font = .boldSystemFont(ofSize: 16)
         label.textColor = .black
-        label.text = "Title Here"
         label.numberOfLines = 2
         
         return label
@@ -35,11 +33,12 @@ final class DitailesCollectionViewCell: UICollectionViewCell {
         
         label.font = .systemFont(ofSize: 14)
         label.textColor = .gray
-        label.text = "Description for news should be here. Please remove this mock text"
         label.numberOfLines = 2
         
         return label
     }()
+    
+    //MARK: - Properties
     
     //MARK: - LifyCycle
     override init(frame: CGRect) {
@@ -47,11 +46,10 @@ final class DitailesCollectionViewCell: UICollectionViewCell {
         
         setUpUI()
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     //MARK: - Private Methods
     private func setUpUI() {
         
