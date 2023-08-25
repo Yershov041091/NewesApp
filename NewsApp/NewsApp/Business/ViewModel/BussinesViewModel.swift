@@ -1,34 +1,33 @@
 //
-//  GeneralViewModel.swift
+//  BussinesViewModel.swift
 //  NewsApp
 //
-//  Created by Artem Yershov on 15.08.2023.
+//  Created by Artem Yershov on 19.08.2023.
 //
 
 import Foundation
 
-protocol GeneralViewModelProtocol {
+protocol BussinesViewModelProtocol {
     var reloadData: (() -> Void)? { get set }
     var showError: ((String) -> Void)? { get set }
     var reloadCell: ((Int) -> Void)? { get set }
     
-    var numberOfCells: Int { get }
-    
+    var numberOfCell: Int { get }
+    func loadData()
     func getArticle(for row: Int) -> ArticleCellViewModel
 }
 
-final class GeneralViewModel: GeneralViewModelProtocol {
-    
-    var numberOfCells: Int {
-        articles.count
-    }
+final class BussinesViewModel: BussinesViewModelProtocol {
     var reloadData: (() -> Void)?
     var showError: ((String) -> Void)?
     var reloadCell: ((Int) -> Void)?
     
-    //MARK: Properties
+    //MARK: - Properties
+    var numberOfCell: Int {
+        return articles.count
+    }
     
-    private var articles : [ArticleCellViewModel] = [] {
+    private var articles: [ArticleCellViewModel] = [] {
         didSet {
             DispatchQueue.main.async {
                 self.reloadData?()
@@ -36,25 +35,17 @@ final class GeneralViewModel: GeneralViewModelProtocol {
         }
     }
     
-    init() {
-        loadData()
-        }
-    
-    func getArticle(for row: Int) -> ArticleCellViewModel {
-        return articles[row]
-    }
-    
-    private func loadData() {
+    // MARK: Methods
+    func loadData() {
         
-        ApiManager.getNews(from: .general) { [weak self] result in
+        ApiManager.getNews(from: .business) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
             case .success(let articles):
-                self.articles = convertToCellViewModel(articles)
+                self.articles = self.convertToCellViewModel(articles)
                 self.loadImage()
             case .failure(let error):
-                //TODO: -
                 DispatchQueue.main.async {
                     self.showError?(error.localizedDescription)
                 }
@@ -79,9 +70,10 @@ final class GeneralViewModel: GeneralViewModelProtocol {
             }
         }
     }
-    private func setUpMockObjects() {
-        articles = [
-            ArticleCellViewModel(article: ArticleResponseObject(title: "War in Ukraine", description: "This articles about Russian invasion bla bla blab labla bl ab la", urlToImage: "...", date: "24.02.2022"))
-        ]
+    
+    func getArticle(for row: Int) -> ArticleCellViewModel {
+        return articles[row]
     }
+    
+    
 }

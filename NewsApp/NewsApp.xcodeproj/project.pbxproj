@@ -32,6 +32,7 @@
 		5555A9232A8D28A900687357 /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5555A9222A8D28A900687357 /* NetworkingError.swift */; };
 		5555A9252A8FC92900687357 /* DetaileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5555A9242A8FC92900687357 /* DetaileViewModel.swift */; };
 		5555A92F2A90A0D000687357 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5555A92E2A90A0D000687357 /* TabBarController.swift */; };
+		5555A9312A90CF3000687357 /* BussinesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5555A9302A90CF3000687357 /* BussinesViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		5555A9222A8D28A900687357 /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
 		5555A9242A8FC92900687357 /* DetaileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetaileViewModel.swift; sourceTree = "<group>"; };
 		5555A92E2A90A0D000687357 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		5555A9302A90CF3000687357 /* BussinesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BussinesViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,6 +284,7 @@
 		5555A9292A8FD47C00687357 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				5555A9302A90CF3000687357 /* BussinesViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 				5555A9062A8691B600687357 /* DetaileViewController.swift in Sources */,
 				5555A91E2A8C02BD00687357 /* ArticleCellViewModel.swift in Sources */,
 				5555A9192A8BD8F900687357 /* NewsResponseObject.swift in Sources */,
+				5555A9312A90CF3000687357 /* BussinesViewModel.swift in Sources */,
 				5555A9152A8BD3B600687357 /* GeneralViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

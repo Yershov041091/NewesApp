@@ -28,20 +28,43 @@ final class BusinessViewController: UIViewController {
     }()
     
     //MARK: - Properties
-    
+    private var viewModel: BussinesViewModelProtocol
 
     //MARK: - LifeCycle
+    
+    init(viewModel: BussinesViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        setUpViewModel()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUpUI()
+        
         collectionView.register(GeneralCollectionViewCell.self, forCellWithReuseIdentifier: "GeneralCollectionViewCell")
         collectionView.register(DitailesCollectionViewCell.self, forCellWithReuseIdentifier: "DitailesCollectionViewCell")
-        
-        setUpUI()
+    
+        viewModel.loadData()
     }
     //MARK: - Methods
     
+    func setUpViewModel() {
+        viewModel.reloadData = { [weak self] in
+            self?.collectionView.reloadData()
+        }
+        viewModel.reloadCell = { [weak self] row in
+            self?.collectionView.reloadItems(at: [IndexPath(row: row, section: 0)])
+        }
+        viewModel.showError = { error in
+            print(error)
+        }
+    }
     
     //MARK: - Private Methods
     private func setUpUI() {
@@ -59,27 +82,40 @@ final class BusinessViewController: UIViewController {
 }
 extension BusinessViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        section == 0 ? 1 : 15
+        if viewModel.numberOfCell > 1 {
+            return section == 0 ? 1 : viewModel.numberOfCell - 1
+        }
+        return viewModel.numberOfCell
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        2
+        viewModel.numberOfCell > 1 ? 2 : 1
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        var cell: UICollectionViewCell?
         
         if indexPath.section == 0 {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GeneralCollectionViewCell", for: indexPath) as? GeneralCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GeneralCollectionViewCell", for: indexPath) as? GeneralCollectionViewCell
+            
+            let article = viewModel.getArticle(for: 0)
+            cell?.set(article: article)
+            
+            return cell ?? UICollectionViewCell()
+            
         } else {
-             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DitailesCollectionViewCell", for: indexPath) as? DitailesCollectionViewCell
+             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DitailesCollectionViewCell", for: indexPath) as? DitailesCollectionViewCell
+        
+            let article = viewModel.getArticle(for: indexPath.row + 1)
+            cell?.set(article: article)
+            
+            return cell ?? UICollectionViewCell()
         }
-        return cell ?? UICollectionViewCell()
     }
 }
 extension BusinessViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-//        navigationController?.pushViewController(DetaileViewController(), animated: true)
+        let article = viewModel.getArticle(for: indexPath.section == 0 ? 0 : indexPath.row + 1)
+        navigationController?.pushViewController(DetaileViewController(viewModel: DetaileViewModel(article: article)), animated: true)
     }
 }
 extension BusinessViewController: UICollectionViewDelegateFlowLayout {

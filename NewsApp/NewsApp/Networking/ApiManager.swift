@@ -8,14 +8,19 @@
 import Foundation
 
 final class ApiManager {
+    enum Category: String {
+        case general = "general"
+        case business = "business"
+        case technology = "technology"
+    }
     
     private static let apiKey = "40e158280cbc4512827781fe8247f086"
     private static let baseUrl = "https://newsapi.org/v2/" // основной адрес который не меняется
-    private static let path = "everything" // дополнение к адресу которое конкретезирует запрос
+    private static let path = "top-headlines" // дополнение к адресу которое конкретезирует запрос
     
     //Create url path and make request
-    static func getNews(complition: @escaping (Result<[ArticleResponseObject], Error>) -> ()) {
-        let stringUrl = baseUrl + path + "?sources=bbc-news&language=en" + "&apiKey=\(apiKey)"
+    static func getNews(from category: Category, complition: @escaping (Result<[ArticleResponseObject], Error>) -> ()) {
+        let stringUrl = baseUrl + path + "?category\(category.rawValue)&language=en" + "&apiKey=\(apiKey)"
         
         guard let url = URL(string: stringUrl) else { return }
         
