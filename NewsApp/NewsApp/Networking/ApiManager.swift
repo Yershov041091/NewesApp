@@ -19,8 +19,16 @@ final class ApiManager {
     private static let path = "top-headlines" // дополнение к адресу которое конкретезирует запрос
     
     //Create url path and make request
-    static func getNews(from category: Category, complition: @escaping (Result<[ArticleResponseObject], Error>) -> ()) {
-        let stringUrl = baseUrl + path + "?category\(category.rawValue)&language=en" + "&apiKey=\(apiKey)"
+    static func getNews(from category: Category,
+                        page: Int,
+                        searchText: String?,
+                        complition: @escaping (Result<[ArticleResponseObject], Error>) -> ()) {
+        var searchParameter = ""
+        if let searchText = searchText {
+            searchParameter = "q=\(searchText)"
+        }
+        
+        let stringUrl = baseUrl + path + "?category\(category.rawValue)&language=en&page=\(page)" + searchParameter + "&apiKey=\(apiKey)"
         
         guard let url = URL(string: stringUrl) else { return }
         

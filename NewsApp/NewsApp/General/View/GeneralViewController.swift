@@ -15,6 +15,8 @@ class GeneralViewController: UIViewController {
     private lazy var searchBar: UISearchBar = {
        let searchBar = UISearchBar()
         
+        searchBar.delegate = self
+        
         return searchBar
     }()
     
@@ -37,11 +39,11 @@ class GeneralViewController: UIViewController {
     
     //MARK: - Properties
     
-    var viewModel: GeneralViewModelProtocol
+    var viewModel: NewaListViewModelProtocol
 
     //MARK: - LifeCycle
     
-    init(viewModel: GeneralViewModelProtocol) {
+    init(viewModel: NewaListViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         setUpViewModel()
@@ -55,14 +57,18 @@ class GeneralViewController: UIViewController {
         super.viewDidLoad()
         
         setUpUI()
+        viewModel.loadData(searchText: nil)
     }
     //MARK: - Methods
     func setUpViewModel() {
         viewModel.reloadData = { [weak self] in
             self?.collectionView.reloadData()
         }
-        viewModel.reloadCell = { [weak self] row in
-            self?.collectionView.reloadItems(at: [IndexPath(row: row, section: 0)])
+        viewModel.reloadCell = { [weak self] indexPath in
+            self?.collectionView.reloadItems(at: [indexPath])
+        }
+        viewModel.showError = { error in
+            print(error)
         }
     }
     
@@ -92,14 +98,18 @@ class GeneralViewController: UIViewController {
 
 //MARK: - UICollectionViewDataSource
 extension GeneralViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        viewModel.sections.count
+    }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.numberOfCells
+        viewModel.sections[section].items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GeneralCollectionViewCell", for: indexPath) as? GeneralCollectionViewCell else { return UICollectionViewCell()}
         
-        let article = viewModel.getArticle(for: indexPath.row)
+        guard let article = viewModel.sections[indexPath.section].items[indexPath.row] as? ArticleCellViewModel,
+              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GeneralCollectionViewCell", for: indexPath) as? GeneralCollectionViewCell else { return UICollectionViewCell()}
+        
         cell.set(article: article)
         
         return cell
@@ -111,8 +121,25 @@ extension GeneralViewController: UICollectionViewDataSource {
 extension GeneralViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let article = viewModel.getArticle(for: indexPath.row)
-        
+        guard let article = viewModel.sections[indexPath.section].items[indexPath.row] as? ArticleCellViewModel else { return }
         navigationController?.pushViewController(DetaileViewController(viewModel: DetaileViewModel(article: article)), animated: true)
+    }
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
+        if indexPath.row == viewModel.sections[indexPath.section].items.count - 15 {
+            viewModel.loadData(searchText: searchBar.text)
+        }
+    }
+}
+//MARK: - UISearchBarDelegate
+extension GeneralViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+        
+        viewModel.loadData(searchText: text)
+    }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        viewModel.loadData(searchText: nil)
     }
 }

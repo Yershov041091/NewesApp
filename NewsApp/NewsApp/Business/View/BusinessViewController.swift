@@ -28,11 +28,11 @@ final class BusinessViewController: UIViewController {
     }()
     
     //MARK: - Properties
-    private var viewModel: BussinesViewModelProtocol
+    private var viewModel: NewaListViewModelProtocol
 
     //MARK: - LifeCycle
     
-    init(viewModel: BussinesViewModelProtocol) {
+    init(viewModel: NewaListViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         setUpViewModel()
@@ -50,7 +50,7 @@ final class BusinessViewController: UIViewController {
         collectionView.register(GeneralCollectionViewCell.self, forCellWithReuseIdentifier: "GeneralCollectionViewCell")
         collectionView.register(DitailesCollectionViewCell.self, forCellWithReuseIdentifier: "DitailesCollectionViewCell")
     
-        viewModel.loadData()
+        viewModel.loadData(searchText: nil)
     }
     //MARK: - Methods
     
@@ -58,8 +58,8 @@ final class BusinessViewController: UIViewController {
         viewModel.reloadData = { [weak self] in
             self?.collectionView.reloadData()
         }
-        viewModel.reloadCell = { [weak self] row in
-            self?.collectionView.reloadItems(at: [IndexPath(row: row, section: 0)])
+        viewModel.reloadCell = { [weak self] indexPath in
+            self?.collectionView.reloadItems(at: [indexPath])
         }
         viewModel.showError = { error in
             print(error)
@@ -82,21 +82,18 @@ final class BusinessViewController: UIViewController {
 }
 extension BusinessViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if viewModel.numberOfCell > 1 {
-            return section == 0 ? 1 : viewModel.numberOfCell - 1
-        }
-        return viewModel.numberOfCell
+        viewModel.sections[section].items.count
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        viewModel.numberOfCell > 1 ? 2 : 1
+        viewModel.sections.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        guard let article = viewModel.sections[indexPath.section].items[indexPath.row] as? ArticleCellViewModel else { return UICollectionViewCell() }
         
         if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GeneralCollectionViewCell", for: indexPath) as? GeneralCollectionViewCell
             
-            let article = viewModel.getArticle(for: 0)
             cell?.set(article: article)
             
             return cell ?? UICollectionViewCell()
@@ -104,18 +101,27 @@ extension BusinessViewController: UICollectionViewDataSource {
         } else {
              let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DitailesCollectionViewCell", for: indexPath) as? DitailesCollectionViewCell
         
-            let article = viewModel.getArticle(for: indexPath.row + 1)
             cell?.set(article: article)
             
             return cell ?? UICollectionViewCell()
         }
     }
 }
+
+//MARK: - UICollectionViewDelegat
 extension BusinessViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let article = viewModel.getArticle(for: indexPath.section == 0 ? 0 : indexPath.row + 1)
+        guard let article = viewModel.sections[indexPath.section].items[indexPath.row] as? ArticleCellViewModel else { return }
         navigationController?.pushViewController(DetaileViewController(viewModel: DetaileViewModel(article: article)), animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        willDisplay cell: UICollectionViewCell,
+                        forItemAt indexPath: IndexPath) {
+        if indexPath.row == viewModel.sections[1].items.count - 15 {
+            viewModel.loadData(searchText: nil)
+        }
     }
 }
 extension BusinessViewController: UICollectionViewDelegateFlowLayout {
